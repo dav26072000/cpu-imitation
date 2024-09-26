@@ -93,7 +93,6 @@ int handle_load_instruction(Register *registers, size_t registers_size, int *ram
     if (ram_cell_addr == NULL)
     {
         perror("LOAD: Faild to get ram cell address");
-
         return -1;
     }
 

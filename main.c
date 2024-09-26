@@ -94,8 +94,15 @@ int is_instruction_exists(char *all_instructions[], int instructions_count, char
     return 0;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    // ASM code path
+    char * asm_code_path = argv[1];
+    for (int i = 0; i < argc; ++i)
+    {
+        printf("%s \n", argv[i]);
+    }
+
     // Init RAM
     int *ram = NULL;
     ram_init(&ram, RAM_SIZE);
@@ -113,7 +120,12 @@ int main()
     int fd = open("db.txt", O_APPEND | O_CREAT | O_RDWR | O_TRUNC, 0666);
 
     // Fetch code file and execute line by line
-    FILE *code_asm_file = fopen("asm_code.txt", "r");
+    FILE *code_asm_file = fopen(asm_code_path, "r");
+    if (code_asm_file == NULL)
+    {
+        perror("Failed to open code file [Incorrect path name]");
+        exit(EXIT_FAILURE);
+    }
     char line_buffer[100];
 
     int is_started = 0;
